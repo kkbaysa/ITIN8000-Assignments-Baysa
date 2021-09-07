@@ -42,9 +42,12 @@ if day_number * month_number % 2 == 0:
 else:
     day_type = "odd"
 
-# print the statement "Hello. Today's date is..." with date variables
+# prompt user for username
+username = str(input("Enter your username: "))
+
+# print the statement "Hello _____. Today's date is..." with username and date variables
 # include a new line
-print("“Hello. Today's date is", month_name, str(day_number) + suffix, "of", year_number, "\b."
+print("“Hello", username, "\b. Today's date is", month_name, str(day_number) + suffix, "of", year_number, "\b."
       " The product of the month and day is " + str(month_number * day_number) + ", which is an " + day_type + " number.\n")
 
 # create list of days with range
