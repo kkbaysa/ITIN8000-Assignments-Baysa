@@ -1,5 +1,15 @@
-import random
+"""
+    menuList() function creates a dictionary of the different menu categories with the key as the category
+    and the value as another dictionary with the key being the food and the value being
+    the quantity of that food:
+    Assign a random value of the item based on the given ranges:
+        Entrees (1-6): chicken, beef, vegetarian
+        Sides (5-10): soup, salad
+        Wines (2-5): merlot, chardonnay, pinot noir, rose
+        Desserts (1-3): flan, creme brulee, chocolate moose, cheesecake
+"""
 
+import random
 
 
 def menuList():
