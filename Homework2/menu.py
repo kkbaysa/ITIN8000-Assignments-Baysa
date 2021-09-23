@@ -39,7 +39,7 @@ def menuList():
             {
                 'flan': random.randint(1, 3),
                 'creme brulee': random.randint(1, 3),
-                'chocolate moose': random.randint(1, 3),
+                'chocolate mouse': random.randint(1, 3),
                 'cheesecake': random.randint(1, 3)
             }
         ]

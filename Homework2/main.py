@@ -8,6 +8,7 @@ This work has been done by Kaitlyn Baysa during Fall 2021 in ITIN8000
 
 import menu as m
 import waiter as w
+import customer as c
 
 # store menu items from the menuList() in menu.py
 menuList = m.menuList()
@@ -21,10 +22,11 @@ while True:
     # if role is invalid, prompt until it is valid
     while not role:
         # Store role
-        roleInput = input("Enter your role (Enter \"W\" for Waiter, \"C\" for Customer, and \"M\" for Manager): ")
+        roleInput = input(
+            "\nEnter your role (Enter \"W\" for Waiter, \"C\" for Customer, and \"M\" for Manager): ").lower()
         actionValid = False
         # if role is waiter, prompt for an action: 1 - read menu; 2 - read section of menu
-        if roleInput.__eq__("W") or roleInput.__eq__("w"):
+        if roleInput.__eq__("w"):
             # set role flag to true
             role = True
             print("1: Read Menu\n2: What are the (entrees/wines/sides/desserts)")
@@ -44,7 +46,8 @@ while True:
                     # continue to ask for the category until a valid one is entered
                     while not validCategory:
                         # prompt user for category to read from menu
-                        categoryInput = input("Enter the name of the category that you want to see (entrees, sides, wines, desserts): ")
+                        categoryInput = input(
+                            "Enter the name of the category that you want to see (entrees, sides, wines, desserts): ")
                         # validate that the category is valid
                         if categoryInput in menuList:
                             # set flag to true
@@ -54,17 +57,23 @@ while True:
                         else:
                             print("\nInvalid category.")
 
-    # else if role is customer, prompt for an action: 1 - order items; 2 - random order
-        # if 1, prompt for order through comma separated list
-            # parse through menu items and store in list
-            # check that each item exists on the menu and that there is some in stock
-            # if in stock, reduce the amount available by one
-            # if not in stock, display error message
-        # if 2 generate random order with one item from each category as long as it is in stock
-            # reduce the amount available by one
-            # print the randomly generated order
+        # else if role is customer, prompt for an action: 1 - order items; 2 - random order
+        if roleInput.__eq__("c"):
+            role = True
+            print("1: Order Items\n2: Random Order")
+            while not actionValid:
+                actionInput = input("Enter the number of the action: ")
+                # if 1, have customer place order through comma separated list
+                if actionInput.__eq__('1'):
+                    orderInput = input("What would you like for your first dinner item? (Please separate items by a comma. Ex: Flan, Pinot Noir, Salad, Beef)")
+                    actionValid = True
+                    c.placeOrder(menuList, orderInput)
+                # if 2 generate random order with one item from each category as long as it is in stock
+                elif actionInput.__eq__('2'):
+                    actionValid = True
+                    c.placeRandomOrder(menuList)
 
-    # else if role is manager, prompt for an action: 1 - open; 2 - close
+        # else if role is manager, prompt for an action: 1 - open; 2 - close
         # if 1, restart the most outer loop to generate new menu
-            # print new menu of foods and quantities
+        # print new menu of foods and quantities
         # if 2, print list of remaining food at the end of the night in list and set all values to zero
