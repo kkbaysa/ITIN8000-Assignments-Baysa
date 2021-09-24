@@ -1,3 +1,10 @@
+"""
+This file contains the functions for a waiter to execute.
+Functions will be called by the main.py file.
+functions: readMenu(), readMenuCategory()
+"""
+
+
 # prints the entire menu with quantities
 # inputs:   menuListInput - menuList to read in
 # outputs:  print the entire menu with the items and quantities

@@ -49,7 +49,7 @@ while True:
                     while not validCategory:
                         # prompt user for category to read from menu
                         categoryInput = input(
-                            "Enter the name of the category that you want to see (entrees, sides, wines, desserts): ")
+                            "Enter the name of the category that you want to see (Enter: entrees, sides, wines, or desserts): ")
                         # validate that the category is valid
                         if categoryInput in menuList:
                             # set flag to true

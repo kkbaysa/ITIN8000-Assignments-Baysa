@@ -12,6 +12,7 @@
 import random
 
 
+# output: returns dictionary of menu items with the random number generated
 def menuList():
     return {
         'entrees': [
