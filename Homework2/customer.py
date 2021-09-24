@@ -25,10 +25,12 @@ def checkOrder(menuList, orderedItems):
                             if items[item] > 0:
                                 items[item] = int(items[item]) - 1
                             else:
-                                print(item, ' not available.')
+                                print(item, 'not available.')
                                 orderAgain = input("Would you like to order again? (Y/N)").lower()
                                 if orderAgain.__eq__('y'):
-                                    placeOrder(menuList)
+                                    orderInput = input(
+                                        "What would you like for your dinner? (Please separate items by a comma. Ex: Flan, Pinot Noir, Salad, Beef)")
+                                    placeOrder(menuList, orderInput)
                                 elif orderAgain.__eq__('n'):
                                     print("I am sorry we couldn't help you. Come back again soon.")
 
@@ -44,7 +46,8 @@ def placeRandomOrder(menuList):
             for item in items:
                 if items[item] > 0:
                     options.append(item)
-            selectedItemInCat = random.choice(list(options))
+            if len(options) > 0:
+                selectedItemInCat = random.choice(list(options))
             if items[selectedItemInCat] > 0:
                 items[selectedItemInCat] -= 1
         randomOrder += selectedItemInCat + '\n'

@@ -19,7 +19,7 @@ Wines (Random quantity between 2 and 5 each)
 Desserts (Random quantity between 1 and 3 each)
 - Flan
 - Creme Brulee
-- Chocolate Moose
+- Chocolate Mouse
 - Cheesecake
 
 After generating the random quantities of each menu item the program should prompt the user to input a role and an action (this does not need to be done as a single input).
@@ -38,4 +38,4 @@ A random order is made using the choice function from the random module
 See Chapter 11 of IP or 3.11 of the Python Cookbook
 Manager
 Close: Lists the remaining food at the end of the night and then sets all of the values to zero
-Open: Restarts the main .py file and generates a new random amount of foods
+Open: Restarts the main.py file and generates a new random amount of foods
