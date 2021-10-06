@@ -4,26 +4,21 @@ and then process it and export the result as a JSON file.
 This assignment was completed by Kaitlyn Baysa during Fall2021 - ITIN8000
 """
 import json
-import os
-from json import JSONDecodeError
-import dask.dataframe as dd
+import time
+from multiprocessing import Process
 import pandas as pd
 
-# Create JSON file
-with open("ComicCharacters.json", "w") as file:
-    json.dumps({})
-    file.close()
-
 # Imports the data from dc-wikia-data.csv and marvel-wikia-data.csv
-dc_data = dd.read_csv("dc-wikia-data.csv", usecols=['name', 'ALIGN', 'EYE', 'HAIR', 'SEX'], sample=10000000)
+dc_data = pd.read_csv("dc-wikia-data.csv", usecols=['name', 'ALIGN', 'EYE', 'HAIR', 'SEX'])
+marvel_data = pd.read_csv("marvel-wikia-data.csv", usecols=['name', 'ALIGN', 'EYE', 'HAIR', 'SEX'])
 
 
-# print(len(dc_data))
-# marvel_data = dd.read_csv("marvel-wikia-data-small.csv", usecols=['name', 'ALIGN', 'EYE', 'HAIR', 'SEX'])
-# print(len(marvel_data))
+jsonDump = {}
+counter = 0
 
-def store(dc_data_In):
-    for ind in dc_data_In.index:
+
+def dataProcess(counterIn, dataSet, ownershipIn):
+    for ind in dataSet.index:
         # Create an object from each record by "Character Name"
         # with object "Ownership" containing the value "Publisher" (DC or Marvel)
         # and object "Characteristics" containing the values:
@@ -32,59 +27,35 @@ def store(dc_data_In):
         #         Hair Color
         #         Gender
         characterObj = \
-            {dc_data_In['name'][ind]: {
-                'Ownership': 'DC',
+            {dataSet['name'][ind]: {
+                'Ownership': ownershipIn,
                 'Characteristics': {
-                    'Alignment': dc_data_In['ALIGN'][ind],
-                    'Eye Color': dc_data_In['EYE'][ind],
-                    'Hair Color': dc_data_In['HAIR'][ind],
-                    'Gender': dc_data_In['SEX'][ind]
+                    'Alignment': dataSet['ALIGN'][ind],
+                    'Eye Color': dataSet['EYE'][ind],
+                    'Hair Color': dataSet['HAIR'][ind],
+                    'Gender': dataSet['SEX'][ind]
                 }
             }
             }
-
-        # add record to JSON file called ComicCharacters.json
-        with open("ComicCharacters.json", "r+") as fileOut:
-            data = {}
-            if os.path.getsize("ComicCharacters.json") > 0:
-                data = json.load(fileOut)
-
-            data.update(characterObj)
-            fileOut.seek(0)
-            json.dump(data, fileOut)
+        jsonDump.update(characterObj)
+        counterIn = counterIn + 1
+    print(str(counterIn) + " " + ownershipIn + " characters added to json file.")
 
 
-# ddata = dd.from_pandas(dc_data, npartitions=2)
-new_df = dc_data.map_partitions(lambda part: store(part))
-new_df.compute()
+if __name__ == '__main__':
+    # create two processes to run the data
+    p1 = Process(target=dataProcess(counter, dc_data, "DC"))
+    p2 = Process(target=dataProcess(counter, marvel_data, "Marvel"))
+    # start processes
+    p1.start()
+    p2.start()
+    # wait for processes to end
+    p1.join()
+    p2.join()
 
-# Loop through each record of dc-wikia-data.csv
-# for ind in dc_data.index:
-#     # Create an object from each record by "Character Name"
-#     # with object "Ownership" containing the value "Publisher" (DC or Marvel)
-#     # and object "Characteristics" containing the values:
-#     #         Alignment (Good, Bad, or Neutral)
-#     #         Eye Color
-#     #         Hair Color
-#     #         Gender
-#     characterObj = \
-#         {dc_data['name'][ind]: {
-#             'Ownership': 'DC',
-#             'Characteristics': {
-#                 'Alignment': dc_data['ALIGN'][ind],
-#                 'Eye Color': dc_data['EYE'][ind],
-#                 'Hair Color': dc_data['HAIR'][ind],
-#                 'Gender': dc_data['SEX'][ind]
-#             }
-#         }
-#         }
-#
-#     # add record to JSON file called ComicCharacters.json
-#     with open("ComicCharacters.json", "r+") as file:
-#         data = {}
-#         if os.path.getsize("ComicCharacters.json") > 0:
-#             data = json.load(file)
-#
-#         data.update(characterObj)
-#         file.seek(0)
-#         json.dump(data, file)
+    # add records to JSON file called ComicCharacters.json
+    with open("ComicCharacters.json", "w") as fileOut:
+        json.dump(jsonDump, fileOut)
+
+# print times of execution
+print(time.perf_counter())
