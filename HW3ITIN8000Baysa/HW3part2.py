@@ -12,12 +12,15 @@ import pandas as pd
 dc_data = pd.read_csv("dc-wikia-data.csv", usecols=['name', 'ALIGN', 'EYE', 'HAIR', 'SEX'])
 marvel_data = pd.read_csv("marvel-wikia-data.csv", usecols=['name', 'ALIGN', 'EYE', 'HAIR', 'SEX'])
 
-
+# dictionary to store the processed data
 jsonDump = {}
+# keep track of how many records have been processed
 counter = 0
 
 
+# function to process both sets of data
 def dataProcess(counterIn, dataSet, ownershipIn):
+    # loop through row in datset
     for ind in dataSet.index:
         # Create an object from each record by "Character Name"
         # with object "Ownership" containing the value "Publisher" (DC or Marvel)
@@ -37,8 +40,11 @@ def dataProcess(counterIn, dataSet, ownershipIn):
                 }
             }
             }
+        # append object to the dictionary
         jsonDump.update(characterObj)
+        # increase counter
         counterIn = counterIn + 1
+    # print the number of records added
     print(str(counterIn) + " " + ownershipIn + " characters added to json file.")
 
 
