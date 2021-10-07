@@ -63,5 +63,5 @@ if __name__ == '__main__':
     with open("ComicCharacters.json", "w") as fileOut:
         json.dump(jsonDump, fileOut)
 
-# print times of execution
-print(time.perf_counter())
+    # print times of execution
+    print(time.perf_counter())
