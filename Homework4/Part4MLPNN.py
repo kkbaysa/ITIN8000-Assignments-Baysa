@@ -15,23 +15,28 @@ iris = load_iris()
 X = iris.data
 y = iris.target
 
-X, y = make_classification(n_samples=100, random_state=1)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
+for i in range(1, 6):
+    X, y = make_classification(n_samples=100, random_state=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2)
 
-scaler = StandardScaler()
-scaler.fit(X_train)
+    scaler = StandardScaler()
+    # fit the training data
+    scaler.fit(X_train)
 
-train_data = scaler.transform(X_train)
-test_data = scaler.transform(X_test)
+    #scale the training data
+    train_data = scaler.transform(X_train)
+    test_data = scaler.transform(X_test)
 
-# creating the classifier
-mlp = MLPClassifier(hidden_layer_sizes=(10, 5), max_iter=1000)
-mlp.fit(X_train, y_train)
+    # creating the classifier
+    mlp = MLPClassifier(random_state=1, max_iter=300)
 
-predictions_train = mlp.predict(train_data)
-print("Accuracy of training data", toPercent(accuracy_score(predictions_train, y_train)))
+    # fit data to the model
+    mlp.fit(train_data, y_train)
 
-predictions_test = mlp.predict(test_data)
-print("Accuracy of testing data",  toPercent(accuracy_score(predictions_test, y_test)))
+    # predictions_train = mlp.predict(train_data)
+    # print("Accuracy of training data", i, ":", toPercent(accuracy_score(predictions_train, y_train)))
+
+    predictions_test = mlp.predict(test_data)
+    print("Accuracy of testing data", i, ":", toPercent(accuracy_score(predictions_test, y_test)))
 
 

@@ -18,7 +18,7 @@ for i in range(1, 6):
     # print("Testing set", i, "\b:\n", yTestSet)
 
     # set K value to 1
-    neigh = neighbors.KNeighborsClassifier(n_neighbors=1)
+    neigh = neighbors.KNeighborsClassifier(n_neighbors=5)
     # look at the nearest neighbors
     neigh.fit(xTrainSet, yTrainSet)
 
