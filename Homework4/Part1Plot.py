@@ -1,3 +1,7 @@
+"""This is Part 1 of homework 4 for ITIN8000
+This will take the iris data set and graph the data combinations
+This work has been done by Kaitlyn Baysa"""
+
 import matplotlib.pyplot as plt
 from sklearn import datasets
 

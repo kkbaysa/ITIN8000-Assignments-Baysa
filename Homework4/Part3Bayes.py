@@ -3,12 +3,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 
-
 # convert accuracy to a decimal
 def toPercent(decimal):
     return "{:.2%}".format(decimal)
 
-
+# load iris data and split into data and target
 iris = load_iris()
 X = iris.data
 y = iris.target
